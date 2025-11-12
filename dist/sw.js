@@ -1,13 +1,15 @@
 const cacheName = "v1";
 async function impl(e) {
-    let cache = await caches.open(cacheName); // Cache megnyitása, async
+    let cache = await caches.open(cacheName); // Cache megnyitï¿½sa, async
     let cacheResponse = await cache.match(e.request); // Lookup
     if (cacheResponse) // Ha megvan
         return cacheResponse // Visszadjuk
     else {
-        let networkResponse = await fetch(e.request); // Ha nincs meg, akkor elindítjuk a ténylegeshálózati lekérdezést
-        cache.put(e.request, networkResponse.clone()) // Eltároljuk
+        let networkResponse = await fetch(e.request); // Ha nincs meg, akkor elindï¿½tjuk a tï¿½nylegeshï¿½lï¿½zati lekï¿½rdezï¿½st
+        cache.put(e.request, networkResponse.clone()) // Eltï¿½roljuk
         return networkResponse; // Visszadjuk
     }
 }
-self.addEventListener("fetch", e => e.respondWith(impl(e))); // Eseményre feliratkozás
+self.addEventListener("fetch", e => e.respondWith(impl(e))); // Esemï¿½nyre feliratkozï¿½
+self.addEventListener("push", e => e.data?.text() ?? "asd asd");
+e.waitUntil(self.registration.showNotification("Push Notification", e.data?.text() ));

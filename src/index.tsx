@@ -8,8 +8,10 @@ import { chatService } from './ChatService';
 
 function App()
 {
+	
 	let [ renderCount, setRenderCount ] = useState( 1 );
 	console.log( "App render count: " + renderCount );
+	Notification.requestPermission();
 	useEffect( () =>
 	{
 		const listener = () => setRenderCount( x => x + 1 );
